@@ -1,10 +1,9 @@
-﻿using BulkyBook.Models;
+﻿using BulkyBookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BulkyBookWeb.Areas.Customer.Controllers
+namespace BulkyBookWeb.Controllers
 {
-   
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

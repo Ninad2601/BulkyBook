@@ -1,0 +1,40 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<form method="post">
+
+    <div class="container pb-3">
+        <div class="border pb-3 mt-4">
+            <h2 class="text-primary"> Create Category</h2>
+            <hr />
+           @* <div asp-validation-summary="All"></div>*@
+            <div class="mb-3">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DisplayOrder"></label>
+                <input asp-for="DisplayOrder" class="form-control" />
+                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:150px">Create</button>
+            <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back To Category</a>
+        </div>
+    </div>
+
+</form>
+
+
+@*Syntax for adding client side validations using _validation scripts partial view*@
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

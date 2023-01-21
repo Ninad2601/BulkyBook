@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BulkyBook.Models
+namespace BulkyBookWeb.Models
 {
     public class Category
     {
@@ -9,8 +8,8 @@ namespace BulkyBook.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [DisplayName("Display Order")]
-        [Range(1, 100, ErrorMessage = "Order Must ranging between 1-100")]
+        [Display(Name ="Display Order")]
+        [Range(1,100,ErrorMessage ="Must be between 1 & 100")]
         public int DisplayOrder { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
     }
