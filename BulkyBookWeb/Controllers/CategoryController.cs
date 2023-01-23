@@ -1,5 +1,7 @@
-﻿using BulkyBookWeb.Data;
-using BulkyBookWeb.Models;
+﻿using BulkyBook.DataAccess;
+using BulkyBook.DataAccess.Repository;
+using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -7,15 +9,16 @@ namespace BulkyBookWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitofwork;
+
+        public CategoryController(IUnitOfWork unitofwork)
         {
-            this._db = db;
+            _unitofwork = unitofwork;
         }
         public IActionResult Index()
         {
             // var objCategoryList = _db.Categories.ToList(); syntax 1
-            IEnumerable<Category> objCategoryList = _db.Categories;
+            IEnumerable<Category> objCategoryList = _unitofwork.Category.GetAll();
             return View(objCategoryList);
         }
         //GET
@@ -36,8 +39,8 @@ namespace BulkyBookWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _unitofwork.Category.Add(obj);
+                _unitofwork.Save();
                 TempData["Success"] = "Added Successfully !!";
                 return RedirectToAction("Index");
             }
@@ -51,17 +54,18 @@ namespace BulkyBookWeb.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
+            //var categoryFromDb = _db.Categories.Find(id);
             //var categoryFromDbFirst = _db.Categories.FirstOrDefault(x=> x.Id==id); //Ways to retrive particular record from db
             //var categoryFromDbSingle = _db.Categories.SingleOrDefault(x=> x.Id==id);
+            var categoryFromDbFirst = _unitofwork.Category.GetFirstOrDefault(x => x.Id == id); //Ways to retrive particular record from db
 
             //Check if categories are null
-            if (categoryFromDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDb);
+            return View(categoryFromDbFirst);
         }
 
         //POST
@@ -76,8 +80,8 @@ namespace BulkyBookWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Update(obj);
-                _db.SaveChanges();
+                _unitofwork.Category.Update(obj);
+                _unitofwork.Save();
                 TempData["Success"] = "Updated Successfully !!";
                 return RedirectToAction("Index");
             }
@@ -91,31 +95,33 @@ namespace BulkyBookWeb.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
+            // var categoryFromDb = _db.Categories.Find(id);
             //var categoryFromDbFirst = _db.Categories.FirstOrDefault(x=> x.Id==id); //Ways to retrive particular record from db
             //var categoryFromDbSingle = _db.Categories.SingleOrDefault(x=> x.Id==id);
+            var categoryFromDbFirst = _unitofwork.Category.GetFirstOrDefault(x => x.Id == id);
 
             //Check if categories are null
-            if (categoryFromDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDb);
+            return View(categoryFromDbFirst);
         }
 
         //POST
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _db.Categories.Find(id);
+            //   var obj = _db.Categories.Find(id);
+            var obj = _unitofwork.Category.GetFirstOrDefault(x => x.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Remove(obj);
-            _db.SaveChanges();
+            _unitofwork.Category.Remove(obj);
+            _unitofwork.Save();
             TempData["Success"] = "Deleted Successfully !!";
             return RedirectToAction("Index");
 
