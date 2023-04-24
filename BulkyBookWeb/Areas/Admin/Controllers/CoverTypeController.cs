@@ -5,21 +5,22 @@ using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace BulkyBookWeb.Controllers
+namespace BulkyBookWeb.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    [Area("Admin")]
+    public class CoverTypeController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
 
-        public CategoryController(IUnitOfWork unitofwork)
+        public CoverTypeController(IUnitOfWork unitofwork)
         {
             _unitofwork = unitofwork;
         }
         public IActionResult Index()
         {
             // var objCategoryList = _db.Categories.ToList(); syntax 1
-            IEnumerable<Category> objCategoryList = _unitofwork.Category.GetAll();
-            return View(objCategoryList);
+            IEnumerable<CoverType> objCover = _unitofwork.CoverType.GetAll();
+            return View(objCover);
         }
         //GET
         public IActionResult Create()
@@ -30,16 +31,12 @@ namespace BulkyBookWeb.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category obj)
+        public IActionResult Create(CoverType obj)
         {
-            //For Checking if the Name & Display order is same on Server Side
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "Name & Display Order Can not be of same Match");
-            }
+           
             if (ModelState.IsValid)
             {
-                _unitofwork.Category.Add(obj);
+                _unitofwork.CoverType.Add(obj);
                 _unitofwork.Save();
                 TempData["Success"] = "Added Successfully !!";
                 return RedirectToAction("Index");
@@ -54,33 +51,26 @@ namespace BulkyBookWeb.Controllers
             {
                 return NotFound();
             }
-            //var categoryFromDb = _db.Categories.Find(id);
-            //var categoryFromDbFirst = _db.Categories.FirstOrDefault(x=> x.Id==id); //Ways to retrive particular record from db
-            //var categoryFromDbSingle = _db.Categories.SingleOrDefault(x=> x.Id==id);
-            var categoryFromDbFirst = _unitofwork.Category.GetFirstOrDefault(x => x.Id == id); //Ways to retrive particular record from db
+            
+            var coverTypeFromDbFirst = _unitofwork.CoverType.GetFirstOrDefault(x => x.Id == id); //Ways to retrive particular record from db
 
             //Check if categories are null
-            if (categoryFromDbFirst == null)
+            if (coverTypeFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDbFirst);
+            return View(coverTypeFromDbFirst);
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category obj)
+        public IActionResult Edit(CoverType obj)
         {
-            //For Checking if the Name & Display order is same on Server Side
-            if (obj.Name == obj.DisplayOrder.ToString())
-            {
-                ModelState.AddModelError("Name", "Name & Display Order Can not be of same Match");
-            }
             if (ModelState.IsValid)
             {
-                _unitofwork.Category.Update(obj);
+                _unitofwork.CoverType.Update(obj);
                 _unitofwork.Save();
                 TempData["Success"] = "Updated Successfully !!";
                 return RedirectToAction("Index");
@@ -95,18 +85,16 @@ namespace BulkyBookWeb.Controllers
             {
                 return NotFound();
             }
-            // var categoryFromDb = _db.Categories.Find(id);
-            //var categoryFromDbFirst = _db.Categories.FirstOrDefault(x=> x.Id==id); //Ways to retrive particular record from db
-            //var categoryFromDbSingle = _db.Categories.SingleOrDefault(x=> x.Id==id);
-            var categoryFromDbFirst = _unitofwork.Category.GetFirstOrDefault(x => x.Id == id);
+           
+            var coverTypeFromDbFirst = _unitofwork.CoverType.GetFirstOrDefault(x => x.Id == id);
 
             //Check if categories are null
-            if (categoryFromDbFirst == null)
+            if (coverTypeFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDbFirst);
+            return View(coverTypeFromDbFirst);
         }
 
         //POST
@@ -115,12 +103,12 @@ namespace BulkyBookWeb.Controllers
         public IActionResult DeletePost(int? id)
         {
             //   var obj = _db.Categories.Find(id);
-            var obj = _unitofwork.Category.GetFirstOrDefault(x => x.Id == id);
+            var obj = _unitofwork.CoverType.GetFirstOrDefault(x => x.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _unitofwork.Category.Remove(obj);
+            _unitofwork.CoverType.Remove(obj);
             _unitofwork.Save();
             TempData["Success"] = "Deleted Successfully !!";
             return RedirectToAction("Index");
@@ -128,4 +116,4 @@ namespace BulkyBookWeb.Controllers
         }
 
     }
-}
+};

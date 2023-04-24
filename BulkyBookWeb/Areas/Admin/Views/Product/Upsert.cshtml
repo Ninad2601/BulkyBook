@@ -1,0 +1,115 @@
+﻿@model BulkyBook.Models.ViewModels.ProductVM
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+
+    <div class="border p-3 mt-4 row">
+        <div class="row pb-2">
+            <h2 class="text-primary">@((Model.ProductVMS == null || Model.ProductVMS.Id == 0) ? "Create" : "Update") Product</h2>
+            <hr />
+            @* <div asp-validation-summary="All"></div>*@
+            <div class="mb-3">
+                <label asp-for="ProductVMS.Title"></label>
+                <input asp-for="ProductVMS.Title" class="form-control" />
+                <span asp-validation-for="ProductVMS.Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ProductVMS.Description"></label>
+                <textarea asp-for="ProductVMS.Description" rows="3" class="form-control"></textarea>
+                <span asp-validation-for="ProductVMS.Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.ISBN"></label>
+                <input asp-for="ProductVMS.ISBN" class="form-control" />
+                <span asp-validation-for="ProductVMS.ISBN" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.Author"></label>
+                <input asp-for="ProductVMS.Author" class="form-control" />
+                <span asp-validation-for="ProductVMS.Author" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.ListPrice"></label>
+                <input asp-for="ProductVMS.ListPrice" class="form-control" />
+                <span asp-validation-for="ProductVMS.ListPrice" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.Price"></label>
+                <input asp-for="ProductVMS.Price" class="form-control" />
+                <span asp-validation-for="ProductVMS.Price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.Price50"></label>
+                <input asp-for="ProductVMS.Price50" class="form-control" />
+                <span asp-validation-for="ProductVMS.Price50" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.Price100"></label>
+                <input asp-for="ProductVMS.Price100" class="form-control" />
+                <span asp-validation-for="ProductVMS.Price100" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ProductVMS.ImageUrl"></label>
+                <input type="file" id="uploadBox" name="file" class="form-control" />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.CategoryId"></label>
+                @* <select asp-for="ProductVMS.CategoryId" asp-items="ViewBag.CategoryList" class="form-control">
+                <option disabled selected>---Select Category---</option>
+                </select>*@
+                <select asp-for="ProductVMS.CategoryId" asp-items="@Model.CategoryList" class="form-control">
+                    <option disabled selected>---Select Category---</option>
+                </select>
+                <span asp-validation-for="ProductVMS.CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 col-6">
+                <label asp-for="ProductVMS.CoverTypeId"></label>
+                @*<select asp-for="ProductVMS.CoverTypeId" asp-items=@(ViewData["CoverTypeList"] as IEnumerable<SelectListItem>) class="form-control">
+                <option disabled selected>---Select CoverType---</option>
+                </select>*@
+                <select asp-for="ProductVMS.CoverTypeId" asp-items=@Model.CoverTypeList class="form-control">
+                    <option disabled selected>---Select CoverType---</option>
+                </select>
+                <span asp-validation-for="ProductVMS.CoverTypeId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                @if (Model.ProductVMS == null || Model.ProductVMS.Id == 0)
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back To Product List</a>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+@*Syntax for adding client side validations using _validation scripts partial view*@
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+    <script>
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == " ") {
+                swal.fire({
+                    icon: 'error',
+                    title: 'oops...',
+                    text: 'Please upload an image'
+
+                });
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+}
