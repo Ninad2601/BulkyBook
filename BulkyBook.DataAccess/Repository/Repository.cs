@@ -17,8 +17,8 @@ namespace BulkyBook.DataAccess.Repository
         internal DbSet<T> dbset;
         public Repository(ApplicationDbContext db)
         {
-            this._db = db;
-            this.dbset = _db.Set<T>();
+            _db = db;
+            dbset = _db.Set<T>();
         }
 
         public void Add(T entity)
@@ -37,7 +37,7 @@ namespace BulkyBook.DataAccess.Repository
             IQueryable<T> query = dbset;
             query = query.Where(filter);
             return query.FirstOrDefault();
-        }
+        } 
 
         public void Remove(T entity)
         {

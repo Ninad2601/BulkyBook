@@ -1,0 +1,35 @@
+﻿@model CoverType
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<form method="post" asp-action="Edit">
+
+    <div class="container pb-3">
+        <div class="border pb-3 mt-4">
+            <h2 class="text-primary"> Update CoverType</h2>
+            <hr />
+           @* <div asp-validation-summary="All"></div>*@
+            <div class="mb-3">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+            <a asp-controller="CoverType" asp-action="Index" class="btn btn-secondary">Back To CoverType</a>
+        </div>
+    </div>
+
+</form>
+
+
+@*Syntax for adding client side validations using _validation scripts partial view*@
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}
