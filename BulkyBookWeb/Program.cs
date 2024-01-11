@@ -1,4 +1,4 @@
-  using BulkyBook.DataAccess;
+using BulkyBook.DataAccess;
 using BulkyBook.DataAccess.Repository;
 using BulkyBook.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -32,17 +32,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
-
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapAreaControllerRoute(
-//        name: "defaultArea",
-//        areaName: "Customer",
-//        pattern: "{controller=Home}/{action=Index}/{id?}");
-//    endpoints.MapControllerRoute(
-//        name: "default",
-//        pattern: "{controller=Home}/{action=Index}/{id?}");
-//});
 
 app.Run();

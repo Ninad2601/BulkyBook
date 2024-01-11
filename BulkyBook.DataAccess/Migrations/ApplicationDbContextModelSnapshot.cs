@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BulkyBookWeb.Migrations
+namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace BulkyBookWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -43,6 +43,29 @@ namespace BulkyBookWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDateTime = new DateTime(2024, 1, 11, 12, 51, 13, 842, DateTimeKind.Local).AddTicks(6440),
+                            DisplayOrder = 1,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDateTime = new DateTime(2024, 1, 11, 12, 51, 13, 842, DateTimeKind.Local).AddTicks(6450),
+                            DisplayOrder = 2,
+                            Name = "Sci-fi"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDateTime = new DateTime(2024, 1, 11, 12, 51, 13, 842, DateTimeKind.Local).AddTicks(6451),
+                            DisplayOrder = 3,
+                            Name = "history"
+                        });
                 });
 
             modelBuilder.Entity("BulkyBook.Models.CoverType", b =>
