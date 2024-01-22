@@ -2,20 +2,21 @@
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
 
+    <input asp-for="ProductVMS.Id" hidden />
+    <input asp-for="ProductVMS.ImageUrl" hidden />
     <div class="border p-3 mt-4 row">
         <div class="row pb-2">
+            
             <h2 class="text-primary">@((Model.ProductVMS == null || Model.ProductVMS.Id == 0) ? "Create" : "Update") Product</h2>
             <hr />
-            @* <div asp-validation-summary="All"></div>*@
             <div class="mb-3">
                 <label asp-for="ProductVMS.Title"></label>
                 <input asp-for="ProductVMS.Title" class="form-control" />
                 <span asp-validation-for="ProductVMS.Title" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="ProductVMS.Description"></label>
+                <label asp-for="ProductVMS.Description" class="ms-2 text-muted"></label>
                 <textarea asp-for="ProductVMS.Description" rows="3" class="form-control"></textarea>
-                <span asp-validation-for="ProductVMS.Description" class="text-danger"></span>
             </div>
             <div class="mb-3 col-6">
                 <label asp-for="ProductVMS.ISBN"></label>
@@ -98,6 +99,12 @@
         <partial name="_ValidationScriptsPartial"></partial>
     }
     <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
+
         function ValidateInput() {
             if (document.getElementById("uploadBox").value == " ") {
                 swal.fire({

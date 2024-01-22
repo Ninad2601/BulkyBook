@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BulkyBook.DataAccess.Migrations
 {
-    public partial class Init : Migration
+    public partial class ForIdentityDataContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,17 +75,17 @@ namespace BulkyBook.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedDateTime", "DisplayOrder", "Name" },
-                values: new object[] { 1, new DateTime(2024, 1, 11, 12, 51, 13, 842, DateTimeKind.Local).AddTicks(6440), 1, "Action" });
+                values: new object[] { 1, new DateTime(2024, 1, 15, 12, 39, 21, 955, DateTimeKind.Local).AddTicks(6403), 1, "Action" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedDateTime", "DisplayOrder", "Name" },
-                values: new object[] { 2, new DateTime(2024, 1, 11, 12, 51, 13, 842, DateTimeKind.Local).AddTicks(6450), 2, "Sci-fi" });
+                values: new object[] { 2, new DateTime(2024, 1, 15, 12, 39, 21, 955, DateTimeKind.Local).AddTicks(6413), 2, "Sci-fi" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedDateTime", "DisplayOrder", "Name" },
-                values: new object[] { 3, new DateTime(2024, 1, 11, 12, 51, 13, 842, DateTimeKind.Local).AddTicks(6451), 3, "history" });
+                values: new object[] { 3, new DateTime(2024, 1, 15, 12, 39, 21, 955, DateTimeKind.Local).AddTicks(6414), 3, "history" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
